@@ -17,8 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from dhCodeAdmin.app.view import home
 
+"""
+from django.config import settings
+from django.config.urls.statics import static
+"""
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Employees/',include('dhCodeAdmin.app.Employees.urls')),
     path('',home),
-]
+]# + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
