@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from dhCodeAdmin.app.view import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Employees/',include('dhCodeAdmin.app.Employees.urls'))
+    path('Employees/',include('dhCodeAdmin.app.Employees.urls')),
+    path('',home),
 ]
