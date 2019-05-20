@@ -9,3 +9,5 @@ class Employee(models.Model):
     fecha_nac = models.DateField()
     fecha_in = models.DateField()
     
+    def __str__(self):
+        return '{}'.format(self.nombre)
