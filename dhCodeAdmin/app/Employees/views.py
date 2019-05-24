@@ -5,7 +5,32 @@ from dhCodeAdmin.app.Employees.models import Employee
 # Create your views here.
 def index(request):
     return render(request,'Employees/Employees.html')
+
+def Destroy(request):
+    if request.method=='POST':
+        id=request.POST['id']
+        Employee.objects.get(id).delete()
+        
+def Update(request):
+    data=request.POST['data']
+    edit_employe = Employee.objects.get(data.id)
+    edit_employe.nombre = data.nombre
+    edit_employe.apellido = data.apellido
+    edit_employe.telefono = data.telefono
+    edit_employe.email = data.email
+    edit_employe.fecha_nac = data.fecha_nac
+    edit_employe.fecha_in = data.fecha_in
+    try:
+        edit_employe.save()
+        return HttpResponse('<div class="alert alert-success">Empleado '+edit_employe.id+': Actualizado Correctamente</div>')
+    except ValueError :
+        return HttpResponse('<div class="alert alert-danger">Empleado '+edit_employe.id+': No se pudo actualizar'+ValueError+'</div>')
+        
     
+        
+
+    
+
 def CreateEmploye(request):
     if request.method=='POST':
         employe = request.POST
@@ -88,8 +113,8 @@ def TableBuilder(result):
         modalDelete+='<script> $("#modal").on("shown.bs.modal", function () {'
         modalDelete+='$("#modal-delete-'+str(emp.id)+'").trigger("focus");   });'
         modalDelete+='$("#btn-delete-'+str(emp.id)+'").click(()=>{ '
-        modalDelete+='$.ajax({ type: "post", url: "/deleteEmployee",data: { id: "'+str(emp.id)+',csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()"},'
-        modalDelete+='beforeSend: ()=>{$("#modal-delete-status").html("'+"<div class='alert alert-light'>Execute Deleting</div>"+'"); },'
+        modalDelete+='$.ajax({ type: "post", url: "delete/",data: { id: "'+str(emp.id)+'",csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()},'
+        modalDelete+='beforeSend: ()=>{$("#modal-delete-status").html("<div class=\'alert alert-light\'>Execute Deleting</div>"); },'
         modalDelete+='success: function (response) {$("#modal-delete-status").html(response); location.reload(); } });'
         modalDelete+='return false; });</script>'
 
@@ -107,8 +132,8 @@ def TableBuilder(result):
         modalEdit+='<form class="form-control" id="editform">'
         modalEdit+='<div class="form-control">'
         modalEdit+='<div id="modal-status-'+str(emp.id)+'"></div>'
-        modalEdit+='<h6 class="card-header">Nombre: <input required name="_id" readonly type="text" class="form-control" value="'+str(emp.id)+'"></h6>'
-        modalEdit+='<h6 class="card-header">Nombre: <input required name="nombre" id="input-nombre-'+str(emp.id)+'"type="text" class="form-control" value="'+emp.nombre+'"></h6>'
+        modalEdit+='<h6 class="card-header">Nombre: <input required name="id" readonly type="text" class="form-control" value="'+str(emp.id)+'"></h6>'
+        modalEdit+='<h6 class="card-header">Nombre: <input required name="nombre" id="input-nombre-'+str(emp.id)+'" type="text" class="form-control" value="'+emp.nombre+'"></h6>'
         modalEdit+='<h6 class="card-header">Apellidos: <input required name="apellido" id="input-apellido-'+str(emp.id)+'" type="text" class="form-control"value="'+emp.apellido+'"></h6>'
         modalEdit+='<h6 class="card-header">Telefono: <input required name="telefono" id="input-telefono-'+str(emp.id)+'" type="phone" class="form-control" value="'+emp.telefono+'"></h6>'
         modalEdit+='<h6 class="card-header">Email: <input required name="email" id="input-email-'+str(emp.id)+'" type="email" class="form-control"value="'+emp.email+'" ></h6>'
@@ -142,22 +167,19 @@ def TableBuilder(result):
         modalEdit+=' });'
         modalEdit+=' $("#btn-update-'+str(emp.id)+'").click(()=>{ '   
         modalEdit+='   data = $("#editform").serialize();'
-        modalEdit+='   data.push({csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]")});'
         modalEdit+='     $.ajax({'
         modalEdit+='       type: "post",'
-        modalEdit+='       url: "control/EmpleadoEditar.php",'
-        modalEdit+='       data: data,'
+        modalEdit+='       url: "update/",'
+        modalEdit+='       data: {data,csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]")},'
         modalEdit+='       beforeSend : ()=>{'
-        modalEdit+='       $("#modal-status-'+str(emp.id)+'").html("<div class=\"alert alert-light\">Realizando Cambios</div>");'
+        modalEdit+='       $("#modal-status-'+str(emp.id)+'").html("<div class=\'alert alert-light\'>Realizando Cambios</div>");'
         modalEdit+='       },'
-        modalEdit+='       success: function (response) {'
-        modalEdit+='       $("#modal-status-'+str(emp.id)+'")'
-        modalEdit+='         .html(response);'
-        modalEdit+='         location.reload();                  }'
+        modalEdit+='       success: (response)=> {'
+        modalEdit+='       $("#modal-status-'+str(emp.id)+'").html(response);'
+        modalEdit+='         location.reload();}'
         modalEdit+='     });'
         modalEdit+='   });'
         modalEdit+='   $("#btn-cancel-'+str(emp.id)+'").click(()=>{'
-        modalEdit+='     $("#input-payment-'+str(emp.id)+'").val("'+str(emp.id)+'");'
         modalEdit+='     $("#btn-update-'+str(emp.id)+'").attr("disabled","disabled");'
         modalEdit+='   });'
         modalEdit+=' </script>'

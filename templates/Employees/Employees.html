@@ -182,7 +182,7 @@
                         $('#search-status').html("<div class='alert alert-primary'>Realizando Busqueda</div>");
                         
                     },
-                    success: function (response) {
+                    success: (response)=>{
                         $('#search-status').html("");
                         $('#table-div').html(response);
                         
