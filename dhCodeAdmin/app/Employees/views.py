@@ -7,30 +7,32 @@ def index(request):
     return render(request,'Employees/Employees.html')
 
 def Destroy(request):
-    if request.method=='POST':
         id=request.POST['id']
-        Employee.objects.get(id).delete()
+        try:
+            edit_employe= Employee.objects.get(id=id)
+            CompleteName= edit_employe.nombre+' '+edit_employe.apellido
+            return HttpResponse('<div class="alert alert-warning">Empleado '+str(id)+' '+CompleteName+': Eliminado Correctamente</div>')
+        except ValueError :
+            return HttpResponse('<div class="alert alert-danger">Empleado '+CompleteName+': No se pudo Borrar'+ValueError+'</div>')
+        
+
         
 def Update(request):
-    data=request.POST['data']
-    edit_employe = Employee.objects.get(data.id)
-    edit_employe.nombre = data.nombre
-    edit_employe.apellido = data.apellido
-    edit_employe.telefono = data.telefono
-    edit_employe.email = data.email
-    edit_employe.fecha_nac = data.fecha_nac
-    edit_employe.fecha_in = data.fecha_in
+    data=request.POST
+    print(data)
+    edit_employe = Employee.objects.get(id=data['id'])
+    edit_employe.nombre = data['nombre']
+    edit_employe.apellido = data['apellido']
+    edit_employe.telefono = data['telefono']
+    edit_employe.email = data['email']
+    edit_employe.fecha_nac = data['fecha_nac']
+    edit_employe.fecha_in = data['fecha_in']
     try:
         edit_employe.save()
-        return HttpResponse('<div class="alert alert-success">Empleado '+edit_employe.id+': Actualizado Correctamente</div>')
+        return HttpResponse('<div class="alert alert-success">Empleado '+str(edit_employe.id)+': Actualizado Correctamente</div>')
     except ValueError :
-        return HttpResponse('<div class="alert alert-danger">Empleado '+edit_employe.id+': No se pudo actualizar'+ValueError+'</div>')
+        return HttpResponse('<div class="alert alert-danger">Empleado '+str(edit_employe.id)+'-'+edit_employe.nombre+' '+edit_employe.apellido+': No se pudo actualizar'+ValueError+'</div>')
         
-    
-        
-
-    
-
 def CreateEmploye(request):
     if request.method=='POST':
         employe = request.POST
@@ -55,10 +57,13 @@ def Search(request):
         search=str(search)
     #   result= Employee.objects.raw('SELECT * FROM employees_employee WHERE nombre LIKE "%'+search+'%" OR apellido LIKE "%'+search+'%"OR email LIKE "%'+search+'%" OR telefono LIKE "%'+search+'%";')    
         result = Employee.objects.filter(nombre__icontains=str(search)) | Employee.objects.filter(apellido__icontains=str(search)) | Employee.objects.filter(email__icontains=str(search)) | Employee.objects.filter(telefono__icontains=str(search))
-        print(result)
-        return HttpResponse(str(TableBuilder(result)))
+        
+        if len(result) != 0:
+            return HttpResponse(str(TableBuilder(result)))
+        else: 
+            return HttpResponse('<div class="alert alert-dark"><h4>No Existen registros con esa descripción</h4></div>')
     else:
-        return HttpResponse('<h2>No Existen registros con esa descripción</h2>')
+        return HttpResponse('<div class="alert alert-warning"><h2>Tú no deberias estar haciendo esto</h2></div>')
 
 def TableBuilder(result):
     alt_table='<table class="table table-striped table-bordered first">'
@@ -88,7 +93,7 @@ def TableBuilder(result):
         content+='<td>'+emp.email+'</td>'
         content+='<td>'+str(emp.fecha_nac)+'</td>'
         content+='<td>'+str(emp.fecha_in)+'</td>'
-        content+='<td>'
+        content+='<td class="row">'
         content+='<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-'+str(emp.id)+'-edit">Editar</button>'
         content+='<button data-toggle="modal" data-target="#modal-delete-'+str(emp.id)+'"class="btn btn-sm btn-danger">'
         content+='    <i class="far fa-trash-alt"></i>'
@@ -113,9 +118,15 @@ def TableBuilder(result):
         modalDelete+='<script> $("#modal").on("shown.bs.modal", function () {'
         modalDelete+='$("#modal-delete-'+str(emp.id)+'").trigger("focus");   });'
         modalDelete+='$("#btn-delete-'+str(emp.id)+'").click(()=>{ '
-        modalDelete+='$.ajax({ type: "post", url: "delete/",data: { id: "'+str(emp.id)+'",csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()},'
-        modalDelete+='beforeSend: ()=>{$("#modal-delete-status").html("<div class=\'alert alert-light\'>Execute Deleting</div>"); },'
-        modalDelete+='success: function (response) {$("#modal-delete-status").html(response); location.reload(); } });'
+        modalDelete+='$.ajax({ type: "post", url: "delete/",data: { id: "'+str(emp.id)+'"},'
+        modalDelete+='beforeSend: function(xhr, settings) {'
+        modalDelete+='if (!csrfSafeMethod(settings.type) && !this.crossDomain) {'
+        modalDelete+='    xhr.setRequestHeader("X-CSRFToken", csrftoken);'
+        modalDelete+='}'
+        modalDelete+='$("#modal-delete-status").html("<div class=\'alert alert-light\'>Execute Deleting</div>"); },'
+        modalDelete+='success: function (response) {$("#modal-delete-status").html(response); location.reload(); },' 
+        modalDelete+='error:(e)=>{ $("#modal-delete-status").html(e);}'
+        modalDelete+='});'
         modalDelete+='return false; });</script>'
 
         modalEdit+='<!-- Modal -->'
@@ -170,8 +181,11 @@ def TableBuilder(result):
         modalEdit+='     $.ajax({'
         modalEdit+='       type: "post",'
         modalEdit+='       url: "update/",'
-        modalEdit+='       data: {data,csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]")},'
-        modalEdit+='       beforeSend : ()=>{'
+        modalEdit+='       data: data,'
+        modalEdit+=' beforeSend: function(xhr, settings) {'
+        modalEdit+='if (!csrfSafeMethod(settings.type) && !this.crossDomain) {'
+        modalEdit+='    xhr.setRequestHeader("X-CSRFToken", csrftoken);'
+        modalEdit+='}'
         modalEdit+='       $("#modal-status-'+str(emp.id)+'").html("<div class=\'alert alert-light\'>Realizando Cambios</div>");'
         modalEdit+='       },'
         modalEdit+='       success: (response)=> {'
