@@ -149,16 +149,17 @@ Proyectos
     $(document).ready(function () {
         $("#proyect_save").click(function () {
             data = $('#proyect_form').serialize();
+            
             $.ajax({
                 type: "post",
                 url: "register/",
                 data: data,
                 beforeSend: () => {
-                    $("#status").html("<div class='alert alert-light'> <strong>Procesando Solicitud</strong></div>");
+                    $("#reg-status").html("<div class='alert alert-light'> <strong>Procesando Solicitud</strong></div>");
                 },
                 success: function (response) {
 
-                    $("#status").html(response);
+                    $("#reg-status").html(response);
                 }
             });
             return false;

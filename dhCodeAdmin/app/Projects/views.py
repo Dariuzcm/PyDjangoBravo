@@ -40,7 +40,7 @@ def Create(request):
                 ).save()
             return HttpResponse('<div class="alert alert-success">Registro Realizado Exitosamente</div>')          
         except ValueError:
-            return HttpResponse('<div class="alert alert-danger">No se pudo realizar el registro</div>')
+            return HttpResponse('<div class="alert alert-danger">No se pudo realizar el registro:'+ValueError+'</div>')
 def Search(request):
     if request.method == 'POST':
         search= request.POST['search']
