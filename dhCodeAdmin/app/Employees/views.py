@@ -19,7 +19,6 @@ def Destroy(request):
         
 def Update(request):
     data=request.POST
-    print(data)
     edit_employe = Employee.objects.get(id=data['id'])
     edit_employe.nombre = data['nombre']
     edit_employe.apellido = data['apellido']
@@ -36,7 +35,6 @@ def Update(request):
 def CreateEmploye(request):
     if request.method=='POST':
         employe = request.POST
-        print(employe)
         try:
             Employee(
                 nombre = employe.get('nombre'),
@@ -48,7 +46,6 @@ def CreateEmploye(request):
                 ).save()
             return HttpResponse('<div class="alert alert-success">Registro Realizado Exitosamente</div>')          
         except ValueError:
-            print(ValueError)
             return HttpResponse('<div class="alert alert-danger">No se pudo realizar el registro</div>')
 
 def Search(request):
