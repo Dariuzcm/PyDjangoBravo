@@ -25,5 +25,6 @@ from django.config.urls.statics import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Employees/',include('dhCodeAdmin.app.Employees.urls')),
+    path('Projects/',include('dhCodeAdmin.app.Proyects.urls')),
     path('',home),
 ]# + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

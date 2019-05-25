@@ -168,13 +168,12 @@ Empleados
 <script type="text/javascript">
     // using jQuery
     var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-</script>
-<script>
-    
     function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+</script>
+<script>
     $(document).ready(function () {
         $('#save_employe').click(function () {
             data = $('#basicform').serialize();

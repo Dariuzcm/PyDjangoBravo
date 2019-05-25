@@ -32,7 +32,7 @@ def Update(request):
     except ValueError :
         return HttpResponse('<div class="alert alert-danger">Empleado '+str(edit_employe.id)+'-'+edit_employe.nombre+' '+edit_employe.apellido+': No se pudo actualizar'+ValueError+'</div>')
         
-def CreateEmploye(request):
+def Create(request):
     if request.method=='POST':
         employe = request.POST
         try:
@@ -115,6 +115,7 @@ def TableBuilder(result):
         modalDelete+='<script> $("#modal").on("shown.bs.modal", function () {'
         modalDelete+='$("#modal-delete-'+str(emp.id)+'").trigger("focus");   });'
         modalDelete+='$("#btn-delete-'+str(emp.id)+'").click(()=>{ '
+
         modalDelete+='$.ajax({ type: "post", url: "delete/",data: { id: "'+str(emp.id)+'"},'
         modalDelete+='beforeSend: function(xhr, settings) {'
         modalDelete+='if (!csrfSafeMethod(settings.type) && !this.crossDomain) {'
@@ -195,8 +196,5 @@ def TableBuilder(result):
         modalEdit+='   });'
         modalEdit+=' </script>'
 
-        if not content:
-            All_table=alt_table+'<tr><td>No existen Registros</td></tr>'+downtable
-        else:
-            All_table=alt_table+content+downtable+modalEdit+modalDelete
+        All_table=alt_table+content+downtable+modalEdit+modalDelete
         return All_table
