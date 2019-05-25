@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dhCodeAdmin.app.Employees',
-    'dhCodeAdmin.app.Proyects',
+    'dhCodeAdmin.app.Projects',
 ]
 
 MIDDLEWARE = [
