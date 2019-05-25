@@ -9,13 +9,14 @@ def Destroy(request):
     id=request.POST['id']
     try:
         edit_project= Project.objects.get(id=id)
-        Proyect_name= edit_project.__str__
-        return HttpResponse('<div class="alert alert-warning">Proyecto '+str(id)+' '+Proyect_name+': Eliminado Correctamente</div>')
+        Proyect_name= edit_project.proyect_name
+        edit_project.delete()
+        return HttpResponse('<div class="alert alert-warning">Proyecto <strong>'+Proyect_name+'</strong>: Eliminado Correctamente</div>')
     except ValueError :
         return HttpResponse('<div class="alert alert-danger">Proyecto '+Proyect_name+': No se pudo Borrar'+ValueError+'</div>')
 def Update(request):
     data=request.POST
-    edit_project = Project.objects.get(id=data.get('id'))
+    edit_project = Project.objects.get(id=data['id'])
     edit_project.proyect_name = data['proyect_name']
     edit_project.begin_date = data['begin_date']
     edit_project.end_date = data['end_date']
@@ -139,7 +140,7 @@ def TableBuilder(result):
         modalDelete+='        },'
         modalDelete+='        success: function (response) {'
         modalDelete+='          $("#modal-delete-status").html(response);'
-        modalDelete+='         /* location.reload();*/'
+        modalDelete+='          location.reload();'
         modalDelete+='        }'
         modalDelete+='      });'
         modalDelete+='      return false;'
@@ -160,7 +161,7 @@ def TableBuilder(result):
         modalEdit+='        <div class="form-control">'
         modalEdit+='        <div id="modal-status-'+str(proyect.id)+'"></div>'
         modalEdit+='        <form id="modalForm-'+str(proyect.id)+'">'
-        modalEdit+='        <h6 class="card-header">Fecha: <input required name="_id" id="input-id-'+str(proyect.id)+'"type="text" readonly class="form-control" value="'+str(proyect.id)+'"></h6>             '       
+        modalEdit+='        <h6 class="card-header">Fecha: <input required name="id" id="input-id-'+str(proyect.id)+'"type="text" readonly class="form-control" value="'+str(proyect.id)+'"></h6>             '       
         modalEdit+='        <h6 class="card-header">Fecha: <input required name="proyect_name" id="input-proyect_name-'+str(proyect.id)+'"type="text" class="form-control" value="'+proyect.proyect_name+'"></h6>'
         modalEdit+='        <h6 class="card-header">Emisor: <input required name="begin_date"  id="input-begin_date-'+str(proyect.id)+'" type="date" class="form-control"value="'+str(proyect.begin_date)+'"></h6>'
         modalEdit+='        <h6 class="card-header">Receptor: <input required name="end_date" id="input-end_date-'+str(proyect.id)+'" type="date" class="form-control" value="'+str(proyect.end_date)+'"></h6>'
