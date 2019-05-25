@@ -9,11 +9,14 @@ def index(request):
 def Destroy(request):
         id=request.POST['id']
         try:
-            edit_employe= Employee.objects.get(id=id).delete()
+            edit_employe= Employee.objects.get(id=id)
             CompleteName= edit_employe.nombre+' '+edit_employe.apellido
-            return HttpResponse('<div class="alert alert-warning">Empleado '+str(id)+' '+CompleteName+': Eliminado Correctamente</div>')
+            edit_employe.delete()
+            
         except ValueError :
             return HttpResponse('<div class="alert alert-danger">Empleado '+CompleteName+': No se pudo Borrar'+ValueError+'</div>')
+        
+        return HttpResponse('<div class="alert alert-warning">Empleado '+str(id)+' '+CompleteName+': Eliminado Correctamente</div>')
         
 
         
