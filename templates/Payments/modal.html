@@ -1,0 +1,77 @@
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Registro: <span id=reg></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>'
+                </button>'
+            </div>
+            <div class="modal-body">
+                <form class="form-control" id="editform">
+                    {% csrf_token %}
+                    <div class="form-control">
+                        <div id="modal-status"></div>
+                        <h6 class="card-header">Id: <input required name="id" readonly type="text"
+                                class="form-control"></h6>
+                        <h6 class="card-header">Emisor: <input required name="emisor" id="input-nombre"
+                                type="text" class="form-control" ></h6>
+                        <h6 class="card-header">Receptor: <input required name="receptor"
+                                id="input-apellido" type="text" class="form-control"></h6>
+                        <h6 class="card-header">Cantidad: <input required name="cantidad"
+                                id="input-telefono" type="number" class="form-control"></h6>
+                        <h6 class="card-header">Motivo: <input required name="motivo" id="input-email"
+                                type="text" class="form-control"></h6>
+                        <h6 class="card-header">Fecha: <input required name="fecha"
+                                id="input-fecha_nac" type="date" class="form-control"></h6>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-cancel" type="button" class="btn btn-secondary"
+                    data-dismiss="modal">Cerrar</button>
+                <button id="btn-update" type="button" class="btn btn-primary" disabled>Guardar
+                    Cambios</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $("#modal").on("shown.bs.modal", function () {
+        $("#modal-edit").trigger("focus")
+    });
+    $("#input-nombre").change(() => {
+        $("#btn-update").removeAttr("disabled");
+    });
+    $("#input-apellido").change(() => {
+        $("#btn-update").removeAttr("disabled");
+    });
+    $("#input-telefono").change(() => {
+        $("#btn-update").removeAttr("disabled");
+    });
+    $("#input-email").change(() => {
+        $("#btn-update").removeAttr("disabled");
+    });
+    $("#input-fecha_nac").change(() => {
+        $("#btn-update").removeAttr("disabled");
+    });
+    $("#btn-update").click(() => {
+        data = $("#editform").serialize();
+        $.ajax({
+            type: "post",
+            url: "update/",
+            data: data,
+            beforeSend: () => {
+                $("#modal-status").html("<div class=\'alert alert-light\'>Realizando Cambios</div>");
+            },
+            success: (response) => {
+                $("#modal-status").html(response);
+                location.reload();
+            }
+        });
+    });
+    $("#btn-cancel").click(() => {
+        $("#btn-update").attr("disabled", "disabled");
+    });
+</script>

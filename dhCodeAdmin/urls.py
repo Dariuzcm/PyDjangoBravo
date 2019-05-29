@@ -26,5 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('Employees/',include('dhCodeAdmin.app.Employees.urls')),
     path('Projects/',include('dhCodeAdmin.app.Projects.urls')),
+    path('Payments/',include('dhCodeAdmin.app.Payments.urls')),
     path('',home),
 ]# + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
