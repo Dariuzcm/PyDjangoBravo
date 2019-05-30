@@ -1,5 +1,5 @@
 from django.urls import path
-from dhCodeAdmin.app.Employees.views import Create,Search,Update,Destroy,index
+from dhCodeAdmin.app.Payments.views import Create,Search,Update,Destroy,index
 
 urlpatterns = [
     path('',index ),
