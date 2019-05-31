@@ -1,7 +1,7 @@
 {% load staticfiles %}
-<!-- ============================================================== -->
-        <!-- navbar -->
-        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- navbar -->
+    <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
                 <a class="navbar-brand" href="">3DH Code</a>
@@ -10,16 +10,16 @@
                 </button>
                 <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-right-top">
-                                
+
                         <li class="nav-item dropdown nav-user">
-                            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'assets/images/goku.ico' %}" alt="" class="user-avatar-md rounded-circle"></a>
+                            <a class="nav-link nav-user-img" href="" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'assets/images/goku.ico' %}" alt="" class="user-avatar-md rounded-circle"></a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
                                     <h5 class="mb-0 text-white nav-user-name">
                                     {% if username %}
-                                                    
+
                                     {% endif %}
-                                         </h5>
+                                    </h5>
                                     <span class="status"></span><span class="ml-2">Disponible</span>
                                 </div>
                                 <a class="dropdown-item" href="/logout"><i class="fas fa-power-off mr-2"></i>Cerrar sesi&oacute;n</a>
@@ -32,6 +32,7 @@
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->
+
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
@@ -45,12 +46,12 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav flex-column">
                             <li class="nav-divider">
-                                Menu
+                                Men&uacute;
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="#" ><i class="fas fa-home"></i>Inicio <span class="badge badge-success">6</span></a> 
+                                <a class="nav-link active" href="" ><i class="fas fa-home"></i>Inicio <span class="badge badge-success">6</span></a>
                             </li>
-                            
+
                             <li class="nav-item ">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fab fa-fw fa-wpforms"></i>Administrar</a>
                                 <div id="submenu-4" class="collapse submenu">
@@ -64,12 +65,12 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="/Payments">Pagos</a>
                                         </li>
-                                        
+
                                         <!--Aqui va el if-->
                                         <li class="nav-item">
                                             <a class="nav-link" href="/Users">Usuarios</a>
                                         </li>
-                                        <!--Aqui termina el if-->    
+                                        <!--Aqui termina el if-->
                                     </ul>
                                 </div>
                             </li>
@@ -78,7 +79,7 @@
                 </nav>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end left sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- end left sidebar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->

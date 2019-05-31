@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'dhCodeAdmin.app.Employees',
     'dhCodeAdmin.app.Projects',
     'dhCodeAdmin.app.Payments',
+    'dhCodeAdmin.app.Users',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'dhCodeAdmin.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': '3dh',
         'USER': 'root',
         'PASSWORD': '',
@@ -89,7 +90,7 @@ DATABASES = {
 }
 
 """
-import dj_database_url 
+import dj_database_url
 from decouple import config
 DATABASES={
     'defaults' : dj_database_url.config(
