@@ -94,7 +94,7 @@ import dj_database_url
 from decouple import config
 DATABASES={
     'defaults' : dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=config('JAWSDB_URL')
     )
 }
 # Password validation
