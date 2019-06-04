@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'dhCodeAdmin.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -97,7 +97,6 @@ DATABASES={
         default=config('DATABASE_URL')
     )
 }
-"""
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
