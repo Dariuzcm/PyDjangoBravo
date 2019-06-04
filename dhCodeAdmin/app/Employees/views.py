@@ -70,6 +70,7 @@ def TableBuilder(result):
     alt_table+='<thead><tr><th>Folio</th><th>Nombre </th><th>Apellido</th><th>Telefono</th>'
     alt_table+='<th>Email</th><th>Fecha de Nacimiento</th><th>Fecha de integración</th>'
     alt_table+='<th></th></tr></thead><tbody>'    
+
     downtable='</tbody>'
     downtable+='<tfoot>'
     downtable+='<tr>'
@@ -81,10 +82,13 @@ def TableBuilder(result):
     downtable+='<th>Fecha de Nacimiento</th>'
     downtable+='<th>Fecha de integración</th>'
     downtable+='<th></th></tr> </tfoot> </table>'
+    
     All_table=''
+    
     content=''
     modalDelete=''
     modalEdit=''
+
     for emp in result:
         content+='<tr><td>'+str(emp.id)+'</td>'
         content+='<td>'+emp.nombre+'</td>'
@@ -100,6 +104,7 @@ def TableBuilder(result):
         content+='</button>'
         content+='</td>'
         content+='</tr>'
+    
         modalDelete+='<!-- Modal -->'
         modalDelete+='<div class="modal fade" id="modal-delete-'+str(emp.id)+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
         modalDelete+='      <div class="modal-dialog" role="document">'
@@ -179,6 +184,7 @@ def TableBuilder(result):
         modalEdit+=' });'
         modalEdit+=' $("#btn-update-'+str(emp.id)+'").click(()=>{ '   
         modalEdit+='   data = $("#editform").serialize();'
+    
         modalEdit+='     $.ajax({'
         modalEdit+='       type: "post",'
         modalEdit+='       url: "update/",'
