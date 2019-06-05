@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'dhCodeAdmin.app.Employees',
     'dhCodeAdmin.app.Projects',
     'dhCodeAdmin.app.Payments',
-    #'dhCodeAdmin.app.Users',
+    'dhCodeAdmin.app.Users',
 ]
 
 MIDDLEWARE = [
