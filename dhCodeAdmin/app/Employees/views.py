@@ -12,14 +12,14 @@ def Destroy(request):
             edit_employe= Employee.objects.get(id=id)
             CompleteName= edit_employe.nombre+' '+edit_employe.apellido
             edit_employe.delete()
-            
+
         except ValueError :
             return HttpResponse('<div class="alert alert-danger">Empleado '+CompleteName+': No se pudo Borrar'+ValueError+'</div>')
-        
-        return HttpResponse('<div class="alert alert-warning">Empleado '+str(id)+' '+CompleteName+': Eliminado Correctamente</div>')
-        
 
-        
+        return HttpResponse('<div class="alert alert-warning">Empleado '+str(id)+' '+CompleteName+': Eliminado Correctamente</div>')
+
+
+
 def Update(request):
     data=request.POST
     edit_employe = Employee.objects.get(id=data['id'])
@@ -34,7 +34,7 @@ def Update(request):
         return HttpResponse('<div class="alert alert-success">Empleado '+str(edit_employe.id)+': Actualizado Correctamente</div>')
     except ValueError :
         return HttpResponse('<div class="alert alert-danger">Empleado '+str(edit_employe.id)+'-'+edit_employe.nombre+' '+edit_employe.apellido+': No se pudo actualizar'+ValueError+'</div>')
-        
+
 def Create(request):
     if request.method=='POST':
         employe = request.POST
@@ -47,7 +47,7 @@ def Create(request):
                 fecha_nac = employe.get('fecha_nac'),
                 fecha_in = employe.get('fecha_in')
                 ).save()
-            return HttpResponse('<div class="alert alert-success">Registro Realizado Exitosamente</div>')          
+            return HttpResponse('<div class="alert alert-success">Registro Realizado Exitosamente</div>')
         except ValueError:
             return HttpResponse('<div class="alert alert-danger">No se pudo realizar el registro</div>')
 
@@ -55,12 +55,12 @@ def Search(request):
     if request.method == 'POST':
         search= request.POST['search']
         search=str(search)
-    #   result= Employee.objects.raw('SELECT * FROM employees_employee WHERE nombre LIKE "%'+search+'%" OR apellido LIKE "%'+search+'%"OR email LIKE "%'+search+'%" OR telefono LIKE "%'+search+'%";')    
+    #   result= Employee.objects.raw('SELECT * FROM employees_employee WHERE nombre LIKE "%'+search+'%" OR apellido LIKE "%'+search+'%"OR email LIKE "%'+search+'%" OR telefono LIKE "%'+search+'%";')
         result = Employee.objects.filter(nombre__icontains=str(search)) | Employee.objects.filter(apellido__icontains=str(search)) | Employee.objects.filter(email__icontains=str(search)) | Employee.objects.filter(telefono__icontains=str(search))
-        
+
         if len(result) != 0:
             return HttpResponse(str(TableBuilder(result)))
-        else: 
+        else:
             return HttpResponse('<div class="alert alert-dark"><h4>No Existen registros con esa descripción</h4></div>')
     else:
         return HttpResponse('<div class="alert alert-warning"><h2>Tú no deberias estar haciendo esto</h2></div>')
@@ -130,7 +130,7 @@ def TableBuilder(result):
         modalDelete+='    xhr.setRequestHeader("X-CSRFToken", csrftoken);'
         modalDelete+='}'
         modalDelete+='$("#modal-delete-status").html("<div class=\'alert alert-light\'>Execute Deleting</div>"); },'
-        modalDelete+='success: function (response) {$("#modal-delete-status").html(response); location.reload(); },' 
+        modalDelete+='success: function (response) {$("#modal-delete-status").html(response); location.reload(); },'
         modalDelete+='error:(e)=>{ $("#modal-delete-status").html(e);}'
         modalDelete+='});'
         modalDelete+='return false; });</script>'
@@ -182,7 +182,7 @@ def TableBuilder(result):
         modalEdit+=' $("#input-fecha_in-'+str(emp.id)+'").change(()=>{'
         modalEdit+='   $("#btn-update-'+str(emp.id)+'").removeAttr("disabled");'
         modalEdit+=' });'
-        modalEdit+=' $("#btn-update-'+str(emp.id)+'").click(()=>{ '   
+        modalEdit+=' $("#btn-update-'+str(emp.id)+'").click(()=>{ '
         modalEdit+='   data = $("#editform").serialize();'
     
         modalEdit+='     $.ajax({'

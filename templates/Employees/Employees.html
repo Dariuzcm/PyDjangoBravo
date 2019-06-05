@@ -6,9 +6,7 @@ Empleados
 
 {% block container %}
 <div class="container-fluid  dashboard-content">
-    <!-- ============================================================== -->
     <!-- pageheader -->
-    <!-- ============================================================== -->
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="page-header">
@@ -24,14 +22,10 @@ Empleados
             </div>
         </div>
     </div>
-    <!-- ============================================================== -->
     <!-- end pageheader -->
-    <!-- ============================================================== -->
 
     <div class="row">
-        <!-- ============================================================== -->
         <!-- justified tabs  -->
-        <!-- ============================================================== -->
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
             <div class="tab-regular">
                 <ul class="nav nav-tabs nav-fill" id="myTab7" role="tablist">
@@ -47,9 +41,7 @@ Empleados
                 <div class="tab-content" id="myTabContent7">
                     <div class="tab-pane fade show active" id="home-justify" role="tabpanel"
                         aria-labelledby="home-tab-justify">
-                        <!-- ============================================================== -->
                         <!-- basic form -->
-                        <!-- ============================================================== -->
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                             <div class="card">
                                 <h5 class="card-header">Campos obligatorios (*)</h5>
@@ -70,7 +62,7 @@ Empleados
                                         <div class="form-group">
                                             <label>N&uacute;mero telef&oacute;nico* <small class="text-muted">(999)
                                                     999-9999</small></label>
-                                            <input type="phone" name="telefono">
+                                            <input type="phone" name="telefono" maxlength="10">
                                         </div>
                                         <div class="form-group">
                                             <label for="">Correo electr&oacute;nico*</label>
@@ -102,23 +94,18 @@ Empleados
                                 </div>
                             </div>
                         </div>
-                        <!-- ============================================================== -->
                         <!-- end basic form -->
-                        <!-- ============================================================== -->
                     </div>
                     <div class="tab-pane fade" id="profile-justify" role="tabpanel"
                         aria-labelledby="profile-tab-justify">
                         <div class="row">
-                            <!-- ============================================================== -->
                             <!-- basic table  -->
-                            <!-- ============================================================== -->
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="card">
                                     <h3 class="card-header">Resultados</h3>
                                     <form class="form" id="searching_form">
                                         <input type="text" id="txt-employe" class="form-control" name="search">
-                                        <button type="submit" class="btn btn-success" id="btn-buscar-employe">Buscar
-                                            Empleado</button>
+                                        <button type="submit" class="btn btn-success" id="btn-buscar-employe">Buscar Empleado</button>
                                     </form>
                                     <div class="card-body">
                                         <div id="search-status"></div>
@@ -146,19 +133,14 @@ Empleados
                                     </div>
                                 </div>
                             </div>
-                            <!-- ============================================================== -->
                             <!-- end basic table  -->
-                            <!-- ============================================================== -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
         <!-- end justified tabs  -->
-        <!-- ============================================================== -->
     </div>
-
 </div>
 
 {% endblock container %}
